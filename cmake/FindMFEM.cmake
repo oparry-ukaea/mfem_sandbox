@@ -21,5 +21,5 @@ find_library(
   PATH_SUFFIXES "lib" "lib64" REQUIRED)
 
 add_library(mfem::mfem INTERFACE IMPORTED)
-target_link_libraries(mfem::mfem INTERFACE ${MFEM_LIB})
+target_link_libraries(mfem::mfem INTERFACE ${MFEM_LIB} -lmfem -lHYPRE)
 target_include_directories(mfem::mfem INTERFACE ${MFEM_INC} ${MFEM_INC}/mfem)
