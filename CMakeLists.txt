@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.9...3.12)
 set(MFEMSB_LIB_NAME mfemsb)
 
 # List of directories under ./solvers to build
-set(SOLVERS ex0p)
+set(SOLVERS ex0p ex9p)
 
 if(${CMAKE_VERSION} VERSION_LESS 3.12)
   cmake_policy(VERSION ${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION})
