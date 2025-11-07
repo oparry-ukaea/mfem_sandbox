@@ -94,5 +94,17 @@ int main(int argc, char* argv[]) {
   x.Save("sol");
   mesh.Save("mesh");
 
+  ParaViewDataCollection* pd = NULL;
+  pd = new ParaViewDataCollection("ex0p", &mesh);
+  pd->SetPrefixPath("ParaView");
+  pd->RegisterField("solution", &x);
+  pd->SetLevelsOfDetail(order);
+  pd->SetDataFormat(VTKFormat::BINARY);
+  pd->SetHighOrderOutput(true);
+  pd->SetCycle(0);
+  pd->SetTime(0.0);
+  pd->Save();
+  delete pd;
+
   return 0;
 }
