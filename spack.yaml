@@ -1,0 +1,22 @@
+spack:
+  specs:
+    - mfem-sandbox
+    - cmake
+  view:
+    gcc:
+      root: ./views/gcc
+      select: ["%gcc"]
+      link_type: symlink
+  concretizer:
+    unify: when_possible
+  repos:
+    - ./spack
+    - $spack/var/spack/repos/builtin
+  packages:
+    all:
+      providers:
+        mpi: [mpich, openmpi]
+  develop:
+    mfem-sandbox:
+      path: .
+      spec: mfem-sandbox@develop
