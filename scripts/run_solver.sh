@@ -47,10 +47,15 @@ find_mesh() {
     else 
         echo "Mesh name set as $mesh_name"
     fi
-    mesh_path="$REPO_ROOT/mfem/data/$mesh_name.mesh"
+    mfem_mesh_path="$REPO_ROOT/mfem/data/$mesh_name.mesh"
+    local_mesh_path="$REPO_ROOT/meshes/$mesh_name.mesh"
 
-    if [ ! -f "$mesh_path" ]; then
-        echo "Mesh file [$mesh_path] not found"
+    if [ -f "$local_mesh_path" ]; then
+        mesh_path="$local_mesh_path"
+    elif [ -f "$mfem_mesh_path" ]; then
+        mesh_path="$mfem_mesh_path"
+    else
+        echo "No mesh file found at either [$mfem_mesh_path] or [$local_mesh_path]"
         exit 6
     fi
 }
