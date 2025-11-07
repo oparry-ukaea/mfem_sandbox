@@ -1,0 +1,4 @@
+[submodule "mfem"]
+	path = mfem
+	url = git@github.com:Heinrich-BR/mfem.git
+	ignore = dirty

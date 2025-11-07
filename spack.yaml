@@ -20,3 +20,5 @@ spack:
     mfem-sandbox:
       path: .
       spec: mfem-sandbox@develop
+    mfem:
+      spec: mfem@develop
