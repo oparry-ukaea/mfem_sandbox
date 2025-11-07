@@ -63,6 +63,10 @@ parse_args() {
     POSITIONAL_ARGS=()
     while [[ $# -gt 0 ]]; do
     case $1 in
+        -a|--args)
+        solver_args="$2"
+        shift 2
+        ;;
         -b|--build-dir)
         exec_loc=$(realpath "$2")
         shift 2
@@ -141,6 +145,7 @@ mesh_name=''
 mesh_path='Not set'
 nmpi='4'
 exec_loc=''
+solver_args=''
 
 # Parse command line args and report resulting options
 parse_args $*
@@ -158,6 +163,6 @@ generate_run_dir "$solver_name"
 find_mesh "$mesh_name"
 
 # Execute run_cmd in run_dir
-run_cmd="mpirun -np $nmpi $solver_exec -m $mesh_path"
+run_cmd="mpirun -np $nmpi $solver_exec $solver_args -m $mesh_path"
 execute "$run_cmd" "$run_dir"
 echo "See $run_dir for output"
