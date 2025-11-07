@@ -4,7 +4,7 @@
 # Helper functions
 echo_usage() {
     echo "Usage:"
-    echo "    $0 [solver_name] <-b build_dir/install_dir> <-m mesh_file> <-n num_MPI>"
+    echo "    $0 [solver_name] <-a solver_args> <-b build_dir/install_dir> <-m mesh_file> <-n num_MPI>"
 }
 
 execute() {
