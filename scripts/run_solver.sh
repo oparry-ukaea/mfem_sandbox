@@ -44,11 +44,17 @@ find_mesh() {
     if [ -z "$mesh_name" ]; then
         default_mesh_names_file="$REPO_ROOT/meshes/defaults.txt"
         mesh_name=$(grep "^$solver_name" "$default_mesh_names_file" | cut -d" " -f 2)
-    else 
-        echo "Mesh name set as $mesh_name"
     fi
-    mfem_mesh_path="$REPO_ROOT/mfem/data/$mesh_name.mesh"
-    local_mesh_path="$REPO_ROOT/meshes/$mesh_name.mesh"
+
+    # If no file extension was provided, append .mesh
+    ext="${mesh_name##*.}"
+    if [ "$ext" == "$mesh_name" ]; then
+        ext="mesh"
+    fi
+    mesh_name="${mesh_name%.$ext}.$ext"
+    
+    mfem_mesh_path="$REPO_ROOT/mfem/data/$mesh_name"
+    local_mesh_path="$REPO_ROOT/meshes/$mesh_name"
 
     if [ -f "$local_mesh_path" ]; then
         mesh_path="$local_mesh_path"
