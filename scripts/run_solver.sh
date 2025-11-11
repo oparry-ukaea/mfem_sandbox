@@ -113,8 +113,11 @@ parse_args() {
 
 report_options() {
     echo "Options:"
-    echo "    Solver : $solver_name"
-    echo "     n MPI : $nmpi"
+    echo "    Solver [with args] : $solver_name [$solver_args]"
+    if [ -n "$mesh_name" ]; then
+        echo "                 Mesh : $mesh_name"
+    fi
+    echo "                 n_MPI : $nmpi"
     echo ""
 }
 
