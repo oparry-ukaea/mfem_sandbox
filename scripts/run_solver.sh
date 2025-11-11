@@ -159,7 +159,7 @@ exec_loc=''
 solver_args=''
 
 # Parse command line args and report resulting options
-parse_args $*
+parse_args "$@"
 report_options
 
 solver_exec='Not set'
