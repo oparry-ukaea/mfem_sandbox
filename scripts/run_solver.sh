@@ -51,18 +51,22 @@ find_mesh() {
     if [ "$ext" == "$mesh_name" ]; then
         ext="mesh"
     fi
-    mesh_name="${mesh_name%.$ext}.$ext"
+    mesh_name_with_ext="${mesh_name%.$ext}.$ext"
     
-    mfem_mesh_path="$REPO_ROOT/mfem/data/$mesh_name"
-    local_mesh_path="$REPO_ROOT/meshes/$mesh_name"
+    mfem_mesh_path="$REPO_ROOT/mfem/data/$mesh_name_with_ext"
+    local_mesh_path="$REPO_ROOT/meshes/$mesh_name_with_ext"
 
     if [ -f "$local_mesh_path" ]; then
         mesh_path="$local_mesh_path"
     elif [ -f "$mfem_mesh_path" ]; then
         mesh_path="$mfem_mesh_path"
     else
-        echo "No mesh file found at either [$mfem_mesh_path] or [$local_mesh_path]"
-        exit 6
+        if [ -n "$mesh_name" ]; then
+            echo "No mesh file found at either [$mfem_mesh_path] or [$local_mesh_path]"
+            exit 6
+        else
+            echo "No default mesh found; using whatever's set in the executable!"
+        fi
     fi
 }
 
@@ -160,7 +164,7 @@ REPO_ROOT=$( cd -- "$(realpath $( dirname -- "${BASH_SOURCE[0]}" )/..)" &> /dev/
 # Default options
 solver_name='Not set'
 mesh_name=''
-mesh_path='Not set'
+mesh_path=''
 nmpi='4'
 exec_loc=''
 run_suffix=''
@@ -181,7 +185,12 @@ generate_run_dir "${solver_name}${run_suffix}"
 # Find mesh file
 find_mesh "$mesh_name"
 
-# Execute run_cmd in run_dir
-run_cmd="mpirun -np $nmpi $solver_exec $solver_args -m $mesh_path"
+# Set run command
+run_cmd="mpirun -np $nmpi $solver_exec $solver_args"
+if [ -n "$mesh_path" ]; then
+run_cmd="$run_cmd -m $mesh_path"
+fi
+
+# Execute run command in run_dir
 execute "$run_cmd" "$run_dir"
 echo "See $run_dir for output"
