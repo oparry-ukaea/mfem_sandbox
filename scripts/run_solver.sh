@@ -94,6 +94,10 @@ parse_args() {
         nmpi="$2"
         shift 2
         ;;
+        -s|--suffix)
+        run_suffix="$2"
+        shift 2
+        ;;
         -*)
         echo "Unknown option $1"
         exit 2
@@ -159,6 +163,7 @@ mesh_name=''
 mesh_path='Not set'
 nmpi='4'
 exec_loc=''
+run_suffix=''
 solver_args=''
 
 # Parse command line args and report resulting options
@@ -171,7 +176,7 @@ set_paths_and_validate "$exec_loc"
 
 # Set up run directory, confirming overwrite if it already exists
 run_dir='Not set'
-generate_run_dir "$solver_name"
+generate_run_dir "${solver_name}${run_suffix}"
 
 # Find mesh file
 find_mesh "$mesh_name"
