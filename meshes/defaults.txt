@@ -1,1 +1,1 @@
-ex9p periodic-hexagon
+ex9p periodic-square.mesh
